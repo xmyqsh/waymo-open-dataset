@@ -93,7 +93,10 @@ def convert_range_image_to_point_cloud(frame,
        [camera_projection_from_first_return,
        camera_projection_from_second_return]}.
     range_image_top_pose: range image pixel pose for top lidar.
-    ri_index: 0 for the first return, 1 for the second return.
+    
+    
+    
+    : 0 for the first return, 1 for the second return.
 
   Returns:
     points: {[N, 3]} list of 3d lidar points of length 5 (number of lidars).
@@ -150,7 +153,7 @@ def convert_range_image_to_point_cloud(frame,
     points_tensor = tf.gather_nd(range_image_cartesian,
                                  tf.compat.v1.where(range_image_mask))
 
-    cp = camera_projections[c.name][0]
+    cp = camera_projections[c.name][ri_index]
     cp_tensor = tf.reshape(tf.convert_to_tensor(value=cp.data), cp.shape.dims)
     cp_points_tensor = tf.gather_nd(cp_tensor,
                                     tf.compat.v1.where(range_image_mask))
